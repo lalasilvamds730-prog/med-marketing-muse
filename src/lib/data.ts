@@ -39,7 +39,7 @@ export async function logActivity(descricao: string, tipo: string) {
 export function useSave(table: TableName, describe: (row: Row, prev?: Row) => string | null) {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: async ({ values, prev }: { values: Record<string, any>; prev?: Row }) => {
+    mutationFn: async ({ values, prev }: { values: Record<string, any>; prev?: Row | undefined }) => {
       const q = supabase.from(table) as any;
       const { data, error } = prev
         ? await q.update(values).eq("id", prev.id).select().single()
