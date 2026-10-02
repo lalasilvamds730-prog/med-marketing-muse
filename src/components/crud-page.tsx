@@ -51,7 +51,7 @@ type Props = {
   statusOptions: string[];
   describe: (row: Row, prev?: Row) => string | null;
   highlight?: (row: Row) => boolean;
-  validate?: (v: Record<string, any>) => string | null;
+  validate?: ((v: Record<string, any>) => string | null) | undefined;
 };
 
 export function CrudPage(p: Props) {
@@ -202,7 +202,7 @@ export function CrudPage(p: Props) {
               { values, prev: editing ?? undefined },
               {
                 onSuccess: () => {
-                  toast.success(editing ? "Alterações salvas com sucesso." : `${p.singular[0].toUpperCase() + p.singular.slice(1)} cadastrado com sucesso.`);
+                  toast.success(editing ? "Alterações salvas com sucesso." : `${p.singular.charAt(0).toUpperCase() + p.singular.slice(1)} cadastrado com sucesso.`);
                   setEditing(undefined);
                 },
               },
@@ -236,7 +236,7 @@ function FormDialog({
   title, fields, initial, saving, onClose, onSubmit, validate,
 }: {
   title: string; fields: Field[]; initial: Record<string, any>; saving: boolean;
-  onClose: () => void; onSubmit: (v: Record<string, any>) => void; validate?: (v: Record<string, any>) => string | null;
+  onClose: () => void; onSubmit: (v: Record<string, any>) => void; validate?: ((v: Record<string, any>) => string | null) | undefined;
 }) {
   const [values, setValues] = useState<Record<string, any>>(() =>
     Object.fromEntries(fields.map((f) => [f.name, initial[f.name] ?? ""])),
