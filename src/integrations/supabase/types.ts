@@ -14,7 +14,218 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      atividades: {
+        Row: {
+          created_at: string
+          descricao: string
+          id: string
+          tipo: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          descricao: string
+          id?: string
+          tipo?: string
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          descricao?: string
+          id?: string
+          tipo?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      conteudos: {
+        Row: {
+          created_at: string
+          data_planejada: string | null
+          id: string
+          observacoes: string
+          status: string
+          tema: string
+          tipo: string
+          titulo: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          data_planejada?: string | null
+          id?: string
+          observacoes?: string
+          status?: string
+          tema?: string
+          tipo?: string
+          titulo: string
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          data_planejada?: string | null
+          id?: string
+          observacoes?: string
+          status?: string
+          tema?: string
+          tipo?: string
+          titulo?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      leads: {
+        Row: {
+          created_at: string
+          data_entrada: string
+          email: string
+          id: string
+          nome: string
+          observacoes: string
+          servico: string
+          status: string
+          user_id: string
+          whatsapp: string
+        }
+        Insert: {
+          created_at?: string
+          data_entrada?: string
+          email?: string
+          id?: string
+          nome: string
+          observacoes?: string
+          servico?: string
+          status?: string
+          user_id?: string
+          whatsapp?: string
+        }
+        Update: {
+          created_at?: string
+          data_entrada?: string
+          email?: string
+          id?: string
+          nome?: string
+          observacoes?: string
+          servico?: string
+          status?: string
+          user_id?: string
+          whatsapp?: string
+        }
+        Relationships: []
+      }
+      oportunidades: {
+        Row: {
+          created_at: string
+          data: string
+          id: string
+          lead_id: string | null
+          nome: string
+          observacoes: string
+          servico: string
+          status: string
+          user_id: string
+          valor_estimado: number
+        }
+        Insert: {
+          created_at?: string
+          data?: string
+          id?: string
+          lead_id?: string | null
+          nome: string
+          observacoes?: string
+          servico?: string
+          status?: string
+          user_id?: string
+          valor_estimado?: number
+        }
+        Update: {
+          created_at?: string
+          data?: string
+          id?: string
+          lead_id?: string | null
+          nome?: string
+          observacoes?: string
+          servico?: string
+          status?: string
+          user_id?: string
+          valor_estimado?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "oportunidades_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          area_de_atuacao: string
+          clinica: string
+          created_at: string
+          email: string
+          id: string
+          nome: string
+          telefone: string
+        }
+        Insert: {
+          area_de_atuacao?: string
+          clinica?: string
+          created_at?: string
+          email?: string
+          id: string
+          nome?: string
+          telefone?: string
+        }
+        Update: {
+          area_de_atuacao?: string
+          clinica?: string
+          created_at?: string
+          email?: string
+          id?: string
+          nome?: string
+          telefone?: string
+        }
+        Relationships: []
+      }
+      tarefas: {
+        Row: {
+          created_at: string
+          descricao: string
+          id: string
+          prazo: string | null
+          prioridade: string
+          responsavel: string
+          status: string
+          titulo: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          descricao?: string
+          id?: string
+          prazo?: string | null
+          prioridade?: string
+          responsavel?: string
+          status?: string
+          titulo: string
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          descricao?: string
+          id?: string
+          prazo?: string | null
+          prioridade?: string
+          responsavel?: string
+          status?: string
+          titulo?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
