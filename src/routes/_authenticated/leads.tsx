@@ -37,6 +37,7 @@ function LeadsPage() {
       filters={[{ name: "status", label: "Status", options: LEAD_STATUS }]}
       statusField="status"
       statusOptions={LEAD_STATUS}
+      validate={(v) => (v.data_entrada === null ? "Informe a data de entrada." : null)}
       describe={(r, prev) =>
         !prev ? `Novo lead cadastrado: ${r.nome}` : prev.status !== r.status ? `Lead ${r.nome} mudou para "${r.status}"` : null
       }
