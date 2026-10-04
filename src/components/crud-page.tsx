@@ -30,7 +30,7 @@ export type Field = {
 
 export type Column = {
   label: string;
-  render: (row: Row) => ReactNode;
+  render: (row: any) => ReactNode;
   primary?: boolean;
   hideMobile?: boolean;
 };
@@ -49,9 +49,9 @@ type Props = {
   filters: { name: string; label: string; options: string[] }[];
   statusField: string;
   statusOptions: string[];
-  describe: (row: Row, prev?: Row) => string | null;
-  highlight?: (row: Row) => boolean;
-  validate?: ((v: Record<string, any>) => string | null) | undefined;
+  describe: (row: any, prev?: any) => string | null;
+  highlight?: (row: any) => boolean;
+  validate?: ((v: any) => string | null) | undefined;
 };
 
 export function CrudPage(p: Props) {
@@ -236,7 +236,7 @@ function FormDialog({
   title, fields, initial, saving, onClose, onSubmit, validate,
 }: {
   title: string; fields: Field[]; initial: Record<string, any>; saving: boolean;
-  onClose: () => void; onSubmit: (v: Record<string, any>) => void; validate?: ((v: Record<string, any>) => string | null) | undefined;
+  onClose: () => void; onSubmit: (v: Record<string, any>) => void; validate?: ((v: any) => string | null) | undefined;
 }) {
   const [values, setValues] = useState<Record<string, any>>(() =>
     Object.fromEntries(fields.map((f) => [f.name, initial[f.name] ?? ""])),

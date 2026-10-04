@@ -36,7 +36,7 @@ export async function logActivity(descricao: string, tipo: string) {
   await supabase.from("atividades").insert({ descricao, tipo } as any);
 }
 
-export function useSave(table: TableName, describe: (row: Row, prev?: Row) => string | null) {
+export function useSave(table: TableName, describe: (row: any, prev?: any) => string | null) {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async ({ values, prev }: { values: Record<string, any>; prev?: Row | undefined }) => {
