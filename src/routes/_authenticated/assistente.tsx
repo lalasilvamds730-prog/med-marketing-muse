@@ -67,7 +67,10 @@ function AssistentePage() {
       status: "Ideia",
       observacoes: `Objetivo: ${s.objetivo}\n\n${s.descricao}`,
     } as any);
-    if (error) return toast.error("Não foi possível salvar o conteúdo.");
+    if (error) {
+      toast.error("Não foi possível salvar o conteúdo.");
+      return;
+    }
     await logActivity(`Novo conteúdo pelo Assistente IA: ${s.titulo}`, "conteudos");
     qc.invalidateQueries({ queryKey: ["conteudos"] });
     qc.invalidateQueries({ queryKey: ["atividades"] });
@@ -133,9 +136,9 @@ function AssistentePage() {
       ) : sugestoes.length === 0 ? (
         !erro && (
           <EmptyState
-            icon={Sparkles}
+            icon={<Sparkles className="h-5 w-5" />}
             title="Nenhuma sugestão ainda"
-            description="Preencha os campos acima e clique em “Gerar ideias”."
+            text="Preencha os campos acima e clique em “Gerar ideias”."
           />
         )
       ) : (
