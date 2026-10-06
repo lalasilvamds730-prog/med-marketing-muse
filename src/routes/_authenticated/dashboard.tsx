@@ -1,8 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 import {
   Users, UserPlus, UserCheck, Handshake, TrendingUp, Wallet,
-  ArrowRight, Activity, BarChart3, AlertCircle,
+  ArrowRight, Activity, BarChart3, AlertCircle, Sparkles,
 } from "lucide-react";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
@@ -12,7 +14,7 @@ import { PageHeader, EmptyState } from "@/components/page-header";
 import { StatusBadge } from "@/components/status-badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
-  useList, formatDate, formatBRL,
+  useList, formatDate, formatBRL, carregarExemplos,
   type Lead, type Oportunidade, type Atividade,
 } from "@/lib/data";
 
@@ -32,6 +34,8 @@ const CHART_COLORS = [
 const MESES = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
 
 function DashboardPage() {
+  const qc = useQueryClient();
+  const [carregando, setCarregando] = useState(false);
   const leads = useList<Lead>("leads");
   const oportunidades = useList<Oportunidade>("oportunidades");
   const atividades = useList<Atividade>("atividades");
@@ -129,6 +133,26 @@ function DashboardPage() {
               <Link to="/oportunidades" className="inline-flex items-center gap-1 rounded-md border bg-card px-4 py-2 text-sm font-medium">
                 Cadastrar oportunidade
               </Link>
+              <button
+                type="button"
+                disabled={carregando}
+                onClick={async () => {
+                  setCarregando(true);
+                  try {
+                    await carregarExemplos();
+                    await qc.invalidateQueries();
+                    toast.success("Dados de exemplo carregados.");
+                  } catch (e: any) {
+                    toast.error("Não foi possível carregar os exemplos: " + (e?.message ?? "erro"));
+                  } finally {
+                    setCarregando(false);
+                  }
+                }}
+                className="inline-flex items-center gap-1 rounded-md border bg-card px-4 py-2 text-sm font-medium disabled:opacity-60"
+              >
+                <Sparkles className="h-4 w-4 text-primary" />
+                {carregando ? "Carregando..." : "Carregar dados de exemplo"}
+              </button>
             </div>
           }
         />
